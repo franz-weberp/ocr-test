@@ -5,14 +5,9 @@
 
     <button @click="clickPhoto()" ref="start-camera" id="click-photo">Click Photo</button>
     <canvas id="canvas" width="320" height="240"></canvas>
-
-
-
-
     <button v-on:click="recognize">recognize</button>
-    <img id="text-img" alt="Vue logo" src="./assets/testocr.png">
 
-    <p id="resultado"></p>
+    <p id="resultado" style="font-size:100px; color: white"></p>
   </div>
 </template>
 
@@ -61,7 +56,7 @@ export default {
       await (await worker).setParameters({
         tessedit_pageseg_mode: PSM.SINGLE_BLOCK,
       });
-      
+
       const { data: { text } } = await (await worker).recognize(img);
 
       resultado.innerHTML = text;

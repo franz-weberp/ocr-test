@@ -11,6 +11,8 @@
 
     <button v-on:click="recognize">recognize</button>
     <img id="text-img" alt="Vue logo" src="./assets/testocr.png">
+
+    <p id="resultado"></p>
   </div>
 </template>
 
@@ -51,15 +53,18 @@ export default {
     },
 
     recognize: async () => {
-      const img = document.getElementById('text-img');
-      console.log(img);
-      await (await worker).loadLanguage('eng');
-      await (await worker).initialize('eng', OEM.LSTM_ONLY);
+      const img = document.getElementById('canvas');
+      const resultado = <HTMLParagraphElement> document.getElementById('resultado')
+
+      await (await worker).loadLanguage('por');
+      await (await worker).initialize('por', OEM.LSTM_ONLY);
       await (await worker).setParameters({
         tessedit_pageseg_mode: PSM.SINGLE_BLOCK,
       });
+      
       const { data: { text } } = await (await worker).recognize(img);
-      console.log(text);
+
+      resultado.innerHTML = text;
     }
   }
 }

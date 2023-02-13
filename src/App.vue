@@ -28,7 +28,9 @@ export default {
     startCamera: async () => {
       const video = <HTMLVideoElement> document.getElementById('video');
 
-      let stream = await navigator.mediaDevices.getUserMedia({ video: true })
+      let stream = await navigator.mediaDevices.getUserMedia({ video: {
+          facingMode: 'environment'
+      } })
 
       if (video != null) video.srcObject = stream 
 

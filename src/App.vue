@@ -17,7 +17,7 @@
 <script lang="ts">
 /* eslint-disable */
 import { createWorker, PSM, OEM } from 'tesseract.js';
-const worker = await createWorker({
+const worker = createWorker({
   logger: m => console.log(m),
 });
 export default {
@@ -51,12 +51,12 @@ export default {
     recognize: async () => {
       const img = document.getElementById('text-img');
       console.log(img);
-      await worker.loadLanguage('eng');
-      await worker.initialize('eng', OEM.LSTM_ONLY);
-      await worker.setParameters({
+      await (await worker).loadLanguage('eng');
+      await (await worker).initialize('eng', OEM.LSTM_ONLY);
+      await (await worker).setParameters({
         tessedit_pageseg_mode: PSM.SINGLE_BLOCK,
       });
-      const { data: { text } } = await worker.recognize(img);
+      const { data: { text } } = await (await worker).recognize(img);
       console.log(text);
     }
   }
